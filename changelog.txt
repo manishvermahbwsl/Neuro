@@ -1,6 +1,9 @@
 Neuro Changelog
 
 ****************************
+Version 3.5 (12-17-18)
+- Fixed cyberchimps page elements issue in wordpress 5.0
+
 Version 3.4 (11-23-18)
 - Added gutenberg compatibility
 - Added testimonial and contact us elements

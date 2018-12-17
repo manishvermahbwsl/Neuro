@@ -691,11 +691,11 @@ add_action( 'wp_enqueue_scripts', 'neuro_enqueue' );
 
 
 /**
- *  Enqueue block styles  in editor
+ * [customizer_css description].
+ *
+ * @return string.
  */
-function neuro_block_styles() {
-
-	wp_enqueue_style( 'neuro-google-font', 'https://fonts.googleapis.com/css?family=Open+Sans|Titillium+Web', array(), '1.0' );
+function customizer_css() {
 
 	$typography_options   = cyberchimps_get_option( 'typography_options' );
 	$font_family_headings = cyberchimps_get_option( 'font_family_headings' );
@@ -708,15 +708,12 @@ function neuro_block_styles() {
 	$link_hover_colorpicker     = cyberchimps_get_option( 'link_hover_colorpicker' ) ? cyberchimps_get_option( 'link_hover_colorpicker' ) : '#005580';
 	$neuro_font_family_headings = $font_family_headings['face'] ? $font_family_headings['face'] : '"Titillium Web", Helvetica, Arial, "Lucida Grande", sans-serif';
 
-	?>
-	<style>
-
-	.editor-writing-flow,
+	$custom_css = ".editor-writing-flow,
 	.editor-styles-wrapper{
-		font-family: <?php echo $font_family; ?>;
-		font-size: <?php echo esc_html( $font_size, 'neuro' ); ?>;
-		font-weight: <?php echo esc_html( $font_weight, 'neuro' ); ?>;
-		color: <?php echo esc_html( $color, 'neuro' ); ?>;
+		font-family: {$font_family};
+		font-size: {$font_size};
+		font-weight: {$font_weight};
+		color: {$color};
 		line-height: 1.5;
 	}
 	.wp-block-freeform.block-library-rich-text__tinymce h1,
@@ -731,17 +728,17 @@ function neuro_block_styles() {
 	.wp-block-heading h4.editor-rich-text__tinymce,
 	.wp-block-heading h5.editor-rich-text__tinymce,
 	.wp-block-heading h6.editor-rich-text__tinymce {
-		font-family: <?php echo $neuro_font_family_headings; ?>;
+		font-family: {$neuro_font_family_headings};
 		font-weight: 700;
 		margin-bottom: 15px;
 	}
 	.editor-post-title__block .editor-post-title__input{
-		font-family: <?php echo $neuro_font_family_headings; ?> !important;
+		font-family: {$neuro_font_family_headings} !important;
 	}
 
 	.wp-block-freeform.block-library-rich-text__tinymce a,
 	.editor-writing-flow a{
-		color: <?php echo esc_html( $link_colorpicker, 'neuro' ); ?>;
+		color: {$link_colorpicker};
 		text-decoration: none;
 	}
 
@@ -749,11 +746,17 @@ function neuro_block_styles() {
 	.wp-block-freeform.block-library-rich-text__tinymce a:focus,
 	.editor-writing-flow a:hover,
 	.editor-writing-flow a:focus{
-		color:  <?php echo esc_html( $link_hover_colorpicker, 'neuro' ); ?>;
-	}
+		color:  {$link_hover_colorpicker};
+	}";
+	return $custom_css;
+}
+/**
+ *  Enqueue block styles  in editor
+ */
+function neuro_block_styles() {
 
-	</style>
-	<?php
+	wp_enqueue_style( 'neuro-google-font', 'https://fonts.googleapis.com/css?family=Open+Sans|Titillium+Web', array(), '1.0' );
+	wp_add_inline_style( 'neuro-google-font', customizer_css() );
 	wp_enqueue_style( 'neuro-gutenberg-blocks', get_stylesheet_directory_uri() . '/inc/css/gutenberg-blocks.css', array(), '1.0' );
 
 }
